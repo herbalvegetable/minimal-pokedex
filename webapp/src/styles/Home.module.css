@@ -1,0 +1,6 @@
+.pokemon_grid{
+    display: grid;
+    gap: 1em;
+
+    grid-template-columns: repeat(5, 1fr);
+}

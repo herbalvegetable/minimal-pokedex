@@ -1,8 +1,8 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
 import styles from './PokemonCard.module.css';
 
-export default function PokemonCard(props){
+export default function PokemonCard({ imgSrc, name, href, types }) {
 
     useEffect(() => {
 

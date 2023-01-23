@@ -8,6 +8,7 @@ const server = app.listen(port, () => {
 });
 
 app.get('/api/pokemon/all', async (req, res) => {
+    console.log('scraping pokemon list...');
     let pokemonList = await scrapePokedex();
 
     res.send(pokemonList);
@@ -41,4 +42,3 @@ async function scrapePokedex(){
 
     return pokemonList;
 }
-scrapePokedex();
