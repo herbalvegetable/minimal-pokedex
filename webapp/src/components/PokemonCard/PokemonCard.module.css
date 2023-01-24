@@ -1,6 +1,15 @@
 .card{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
     border-radius: 5px;
     border: 1px solid gray;
 
     padding: 0.5em;
+}
+.card .img{
+    max-width: 5em;
+    max-height: 5em;
 }

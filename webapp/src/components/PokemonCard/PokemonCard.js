@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { Image } from 'react-bootstrap';
 
 import styles from './PokemonCard.module.css';
 
-export default function PokemonCard({ imgSrc, name, href, types }) {
+export default function PokemonCard({ name, href, imgSrc}) {
 
     useEffect(() => {
 
@@ -10,7 +11,11 @@ export default function PokemonCard({ imgSrc, name, href, types }) {
 
     return (
         <div className={styles.card}>
-            PokemonCard
+            <Image 
+                src={imgSrc}
+                alt={name}
+                className={styles.img}/>
+            <span className={styles.name}>{name}</span>
         </div>
     )
 }

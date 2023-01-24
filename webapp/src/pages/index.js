@@ -6,22 +6,23 @@ import Image from 'next/image'
 import styles from '@/styles/Home.module.css';
 
 import PokemonCard from '@/components/PokemonCard/PokemonCard';
+import PokemonViewer from '@/components/PokemonViewer/PokemonViewer';
 
 export const getStaticProps = async () => {
 	const res = await fetch('http://localhost:5000/api/pokemon/all');
 	const data = await res.json();
 
 	return {
-		props: { pokemonList: data },
+		props: { pList: data },
 	}
 }
 
-export default function Home({pokemonList: pList}) {
+export default function Home({ pList }) {
 
 	const [pokemonList, setPokemonList] = useState(pList);
 
 	useEffect(() => {
-		console.log(pokemonList);
+		console.log(pList);
 	}, []);
 
 	return (
@@ -33,12 +34,15 @@ export default function Home({pokemonList: pList}) {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<h2>Minimalistic Pokedex</h2>
-			<div className={styles.pokemon_grid}>
-				{
-					pokemonList.map((pokemon, i) => {
-						return <PokemonCard key={i.toString()} {...pokemon}/>
-					})
-				}
+			<div className={styles.main}>
+				<div className={styles.pokemon_grid}>
+					{
+						pokemonList.map((pokemon, i) => {
+							return <PokemonCard key={i.toString()} {...pokemon}/>
+						})
+					}
+				</div>
+				<PokemonViewer />
 			</div>
 		</>
 	)
