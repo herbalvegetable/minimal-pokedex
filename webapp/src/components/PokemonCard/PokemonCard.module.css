@@ -2,12 +2,22 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 
     border-radius: 5px;
-    border: 1px solid gray;
+    /* border: 1px solid gray; */
 
     padding: 0.5em;
+    
+    background-color: inherit;
+
+    box-shadow: 4px 4px 6px 0px rgba(133, 133, 133, 0.75);
+
+    transition: 0.125s;
+}
+.card:hover{
+    background-color: rgb(235, 235, 235);
+    color: black;
 }
 .card .img{
     max-width: 5em;
