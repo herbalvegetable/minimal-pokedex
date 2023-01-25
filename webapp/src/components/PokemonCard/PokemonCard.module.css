@@ -11,13 +11,17 @@
     
     background-color: inherit;
 
-    box-shadow: 4px 4px 6px 0px rgba(133, 133, 133, 0.75);
+    box-shadow: 3px 3px 2px 0px rgba(133, 133, 133, 0.75);
 
     transition: 0.125s;
+
+    cursor: pointer;
+    user-select: none;
 }
 .card:hover{
-    background-color: rgb(235, 235, 235);
-    color: black;
+    background-color: var(--typec);
+    /* color: black; */
+    /* font-weight: 600; */
 }
 .card .img{
     max-width: 5em;

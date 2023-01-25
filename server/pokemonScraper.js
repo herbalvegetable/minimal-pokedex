@@ -59,7 +59,7 @@ async function scrapePokemonList() {
     console.log('scraping pokemon list...');
 
     fs.writeFileSync('./pokemon-list.txt', '');
-    fs.appendFileSync('./pokemon-list.txt', 'name|href|imgSrc\n');
+    fs.appendFileSync('./pokemon-list.txt', 'name|href|imgSrc|typeColour\n');
 
     const res = await fetch('https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number');
     const body = await res.text();
@@ -73,7 +73,13 @@ async function scrapePokemonList() {
 
         pokemonDataList.push($($($(tr).find('td')[2]).find('a')).text()) // name
         pokemonDataList.push($($(tr).find('td a')).attr('href')) // href
-        pokemonDataList.push($($(tr).find('img')).attr('src')); // imgSrc
+
+        let imgSrc = $($(tr).find('img')).attr('src');
+        pokemonDataList.push(imgSrc); // imgSrc
+
+        try{
+            pokemonDataList.push( $($(tr).find('td')[3]).attr('style').split(':')[1] ); // typeColour
+        }catch(e){console.log(e);}
 
         let pokemonDataStr = `${pokemonDataList.join('|')}\n`;
 
@@ -90,7 +96,6 @@ async function scrapePokemonList() {
 scrapePokemonList();
 
 async function scrapePokemon(href) {
-
     const res = await fetch(`https://bulbapedia.bulbagarden.net${href}`);
     const body = await res.text();
 
