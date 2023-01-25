@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 import Head from 'next/head'
 import Image from 'next/image'
@@ -8,7 +9,14 @@ import styles from '@/styles/Home.module.css';
 import PokemonCard from '@/components/PokemonCard/PokemonCard';
 import PokemonViewer from '@/components/PokemonViewer/PokemonViewer';
 
-export const getStaticProps = async () => {
+export const getStaticPaths = async ({params}) => {
+	return {
+        paths: [], //indicates that no page needs be created at build time
+        fallback: 'blocking' //indicates the type of fallback
+    }
+}
+
+export const getStaticProps = async (context) => {
 	const res = await fetch('http://localhost:5000/api/pokemon/all');
 	const data = await res.json();
 
@@ -19,11 +27,15 @@ export const getStaticProps = async () => {
 
 export default function Home({ pList }) {
 
-	const [pokemonList, setPokemonList] = useState(pList);
+	const router = useRouter();
+	const { pokemonHrefs } = router.query;
 
 	useEffect(() => {
-		console.log(pList);
+		console.log(pokemonHrefs);
 	}, []);
+
+	const [pokemonList, setPokemonList] = useState(pList);
+	const [selectedHref, setSelectedHref] = useState('');
 
 	return (
 		<>
@@ -33,16 +45,21 @@ export default function Home({ pList }) {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<h2>Minimalistic Pokedex</h2>
 			<div className={styles.main}>
 				<div className={styles.pokemon_grid}>
 					{
 						pokemonList.map((pokemon, i) => {
-							return <PokemonCard key={i.toString()} {...pokemon}/>
+							return <PokemonCard 
+								key={i.toString()} 
+								{...pokemon}
+								setSelectedHref={setSelectedHref}/>
 						})
 					}
 				</div>
-				<PokemonViewer />
+				<div className={styles.pokemon_viewer_wrapper}>
+					<h2>Minimalistic Pokedex</h2>
+					<PokemonViewer />
+				</div>
 			</div>
 		</>
 	)

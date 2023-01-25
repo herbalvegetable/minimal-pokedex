@@ -2,6 +2,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const fs = require('fs');
+const { scrapePokemon } = require('./pokemonScraper');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -15,6 +16,14 @@ app.get('/api/pokemon/all', async (req, res) => {
     const pokemonList = await getPokemonList();
 
     res.send(pokemonList);
+});
+
+app.get('/api/pokemon', async (req, res) => {
+    const { href } = req.query;
+
+    const pokemonData = await scrapePokemon(href);
+
+    res.send(pokemonData);
 });
 
 async function getPokemonList() {

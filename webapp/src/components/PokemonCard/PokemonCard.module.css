@@ -11,7 +11,7 @@
     
     background-color: inherit;
 
-    box-shadow: 3px 3px 2px 0px rgba(133, 133, 133, 0.75);
+    box-shadow: 3px 3px 2px 0px rgba(133, 133, 133, 0.65);
 
     transition: 0.125s;
 
@@ -20,10 +20,26 @@
 }
 .card:hover{
     background-color: var(--typec);
+    /* box-shadow: 3px 3px 2px 0px var(--typec); */
+    box-shadow: 7px 7px 2px 0px rgba(133, 133, 133, 0.15);
+
+    transform: translateX(-4px) translateY(-4px);
     /* color: black; */
     /* font-weight: 600; */
 }
 .card .img{
     max-width: 5em;
     max-height: 5em;
+}
+
+.card .text{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+.card .text .name{
+    margin-bottom: 0.25em;
+}
+.card .text .form{
+    font-size: smaller;
 }

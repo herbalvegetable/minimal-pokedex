@@ -3,20 +3,32 @@ import { Image } from 'react-bootstrap';
 
 import styles from './PokemonCard.module.css';
 
-export default function PokemonCard({ name, href, imgSrc, typeColour }) {
+export default function PokemonCard({ name, form, href, imgSrc, typeColour, setSelectedHref }) {
 
     useEffect(() => {
-        console.log(typeColour);
+
     }, []);
 
     return (
         <>
-            <div className={styles.card} style={{'--typec': typeColour ? `${typeColour}A6` : 'gray'}}>
+            <div 
+                className={styles.card} 
+                style={{'--typec': typeColour ? `${typeColour}59` : 'gray'}}
+                onClick={e => {
+                    setSelectedHref(href);
+                }}>
                 <Image
                     src={imgSrc}
                     alt={name}
                     className={styles.img}/>
-                <span className={styles.name}>{name}</span>
+                <div className={styles.text}>
+                    <span className={styles.name}>{name}</span>
+                    {
+                        form.split('<br>').map((str, i) => {
+                            return <span key={i.toString()} className={styles.form}>{str}</span>
+                        })
+                    }
+                </div>
             </div>
         </>
     )
