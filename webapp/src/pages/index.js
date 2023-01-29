@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 import Head from 'next/head'
 import Image from 'next/image'
@@ -8,13 +7,6 @@ import styles from '@/styles/Home.module.css';
 
 import PokemonCard from '@/components/PokemonCard/PokemonCard';
 import PokemonViewer from '@/components/PokemonViewer/PokemonViewer';
-
-export const getStaticPaths = async ({params}) => {
-	return {
-        paths: [], //indicates that no page needs be created at build time
-        fallback: 'blocking' //indicates the type of fallback
-    }
-}
 
 export const getStaticProps = async (context) => {
 	const res = await fetch('http://localhost:5000/api/pokemon/all');
@@ -27,15 +19,24 @@ export const getStaticProps = async (context) => {
 
 export default function Home({ pList }) {
 
-	const router = useRouter();
-	const { pokemonHrefs } = router.query;
-
-	useEffect(() => {
-		console.log(pokemonHrefs);
-	}, []);
-
 	const [pokemonList, setPokemonList] = useState(pList);
 	const [selectedHref, setSelectedHref] = useState('');
+	const [pokemonData, setPokemonData] = useState({});
+
+	const fetchPokemonData = async href => {
+		if(!href) return {};
+		const res = await fetch(`http://localhost:5000/api/pokemon?href=${href}`);
+		return await res.json();
+	}
+
+	useEffect(() => {
+		fetchPokemonData(selectedHref)
+			.then(data => {
+				console.log(data);
+				setPokemonData(data);
+			})
+			.catch(err => console.log(err));
+	}, [selectedHref]);
 
 	return (
 		<>
@@ -58,7 +59,7 @@ export default function Home({ pList }) {
 				</div>
 				<div className={styles.pokemon_viewer_wrapper}>
 					<h2>Minimalistic Pokedex</h2>
-					<PokemonViewer />
+					<PokemonViewer {...pokemonData}/>
 				</div>
 			</div>
 		</>

@@ -6,10 +6,10 @@ async function scrapePokemon(href) {
 
     const $ = cheerio.load(body);
 
-    let pokemonData = [];
+    let pokemonData = {};
 
-    pokemonData.push($($('b')[0]).text()); // name
-    pokemonData.push($($('img')[2]).attr('src')) // imgSrc
+    pokemonData.name = $($('b')[0]).text(); // name
+    pokemonData.imgSrc = $($('img')[2]).attr('src'); // imgSrc
 
     return pokemonData;
 }

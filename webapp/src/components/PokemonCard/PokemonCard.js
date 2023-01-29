@@ -6,14 +6,14 @@ import styles from './PokemonCard.module.css';
 export default function PokemonCard({ name, form, href, imgSrc, typeColour, setSelectedHref }) {
 
     useEffect(() => {
-
+        
     }, []);
 
     return (
         <>
             <div 
                 className={styles.card} 
-                style={{'--typec': typeColour ? `${typeColour}59` : 'gray'}}
+                style={{'--typec': typeColour ? `${typeColour}59` : 'darkgrey'}}
                 onClick={e => {
                     setSelectedHref(href);
                 }}>

@@ -1,0 +1,3 @@
+name|form|href|imgSrc|typeColour
+Bulbasaur||/wiki/Bulbasaur_(Pok%C3%A9mon)|//archives.bulbagarden.net/media/upload/thumb/f/fb/0001Bulbasaur.png/70px-0001Bulbasaur.png|#78C850
+Ivysaur||/wiki/Ivysaur_(Pok%C3%A9mon)|//archives.bulbagarden.net/media/upload/thumb/8/81/0002Ivysaur.png/70px-0002Ivysaur.png|#78C850

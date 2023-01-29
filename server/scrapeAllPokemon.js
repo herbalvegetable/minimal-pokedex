@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const fs = require('fs');
+const https = require('https');
 
 // async function scrapePokemonList() {
 //     console.log('scraping pokemon list...');
@@ -58,8 +59,15 @@ const fs = require('fs');
 async function scrapePokemonList() {
     console.log('scraping pokemon list...');
 
+    const headerStr = 'name|form|href|imgSrc|typeColour\n';
+
+    // Actual file
     fs.writeFileSync('./pokemon-list.txt', '');
-    fs.appendFileSync('./pokemon-list.txt', 'name|form|href|imgSrc|typeColour\n');
+    fs.appendFileSync('./pokemon-list.txt', headerStr);
+
+    // Test file
+    fs.writeFileSync('./pokemon-list-test.txt', '');
+    fs.appendFileSync('./pokemon-list-test.txt', headerStr);
 
     const res = await fetch('https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number');
     const body = await res.text();
@@ -101,8 +109,20 @@ async function scrapePokemonList() {
                 return;
             }
 
-            console.log(`[${i + 1}/${pokemonHrefs.length}] Added pokemon: ${pokemonDataList[0]}`);
+            console.log(`[${i + 1}/${pokemonHrefs.length}] Added pokemon to LIST: ${pokemonDataList[0]}`);
         });
+
+        if(i < 2){
+            fs.appendFile('./pokemon-list-test.txt', pokemonDataStr, err => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+    
+                console.log(`[${i + 1}/${pokemonHrefs.length}] Added pokemon to TEST : ${pokemonDataList[0]}`);
+            })
+        }
+
     });
 }
 scrapePokemonList();
